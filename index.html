@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Interpreter</title>
+	<script src="interpreter/stream.js"></script>
+	<script src="interpreter/character.js"></script>
+	<script src="interpreter/word.js"></script>
+	<script src="interpreter/expression.js"></script>
+	<script src="interpreter/keywords/function.js"></script>
+	<script src="interpreter/keywords/while.js"></script>
+	<script src="interpreter/keywords/if.js"></script>
+	<script src="interpreter/keywords/end.js"></script>
+	<script src="interpreter/keywords/return.js"></script>
+	<script src="interpreter/keywords/assignment.js"></script>
+	<script src="interpreter/parser.js"></script>
+
+	<script src="interpreter/actions/unary operators/minus.js"></script>
+	<script src="interpreter/actions/binary operators/plus.js"></script>
+	<script src="interpreter/actions/binary operators/minus.js"></script>
+	<script src="interpreter/actions/binary operators/multiply.js"></script>
+	<script src="interpreter/actions/binary operators/divide.js"></script>
+	<script src="interpreter/actions/expression.js"></script>
+	<script src="interpreter/actions/assignment.js"></script>
+	<script src="interpreter/actions/if.js"></script>
+	<script src="interpreter/actions/while.js"></script>
+	<script src="interpreter/actions/return.js"></script>
+	<script src="interpreter/interpreter.js"></script>
+</head>
+<body>
+<textarea></textarea>
+<button onclick="calculate()">Выполнить</button>
+
+<script>
+	function calculate(){
+		var text_source = {
+			text: document.querySelector('textarea').value,
+			/*":f(a, b)\r\n" +
+			"	a=1\r\n" +
+			"	return 2+2\r\n" +
+			"end\r\n" +
+			"\r\n" +
+			"while -1\r\n" +
+			"end\r\n" +
+			"\r\n" +
+			"if 1\r\n" +
+			"end",*/
+			/*"function f(a)\r\n" +
+			"	return a\r\n" +
+			"end\r\n" +
+
+			"function main()\r\n" +
+			"	b = f(1+10) + f(2-3+4)\n\r" +
+			"   res = main()\r\n" +
+			/*"	if 1\r\n" +
+			"		b=b - 1\r\n" +
+			"	end\r\n" +
+			"	while b\r\n" +
+			"		b=b - 1\r\n" +
+			"	end\r\n" +*/
+			//"end",
+
+			current_position: 0
+		}
+
+		function read_text_source_byte(text_source){
+			var current_byte = text_source.text[ text_source.current_position ]
+
+			++text_source.current_position
+
+			return current_byte
+		}
+
+		function end_text_source_byte(text_source){
+			return text_source.current_position > text_source.text.length
+		}
+
+		var stream = create_stream(text_source, read_text_source_byte, end_text_source_byte)
+
+		var functions = parse(stream)
+		console.log(functions)
+
+		interprete(functions)
+	}
+</script>
+</body>
+</html>
